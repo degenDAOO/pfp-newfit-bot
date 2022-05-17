@@ -26,8 +26,6 @@ outfits_folder = 'outfits/beer/'
 
 outfits = ["default", "clean"]
 
-load_dotenv()
-
 # Search for the pfp id in the JSON dictionary and return the image URL associated with that id. You'll need to update the keys to match what's in your JSON delattr
 
 
