@@ -1,12 +1,15 @@
 [tool.poetry]
-name = "repl_python3_suit-up-discord-bot"
+name = "pfp-newfit-bot"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["jsblair9 <james@lionsmouth.digital>"]
+license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 discord = "^1.7.3"
+requests = "^2.27.1"
+Pillow = "^9.1.1"
 
 [tool.poetry.dev-dependencies]
 
