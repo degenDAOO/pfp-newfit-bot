@@ -84,4 +84,7 @@ async def fits(ctx):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound): # or discord.ext.commands.errors.CommandNotFound as you wrote
         await ctx.send("Unknown command, please check !help for a list of available commands")
+
+load_dotenv()
+
 bot.run(os.getenv('DISCORD_TOKEN'))
