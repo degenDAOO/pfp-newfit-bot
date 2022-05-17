@@ -3,7 +3,7 @@
 This bot was initially created for the [MonkeyDAO](https://twitter.com/monkedao) to help [Solana Monkey Business](https://twitter.com/SolanaMBS) suit up for Christie's in support of [BAYC](https://twitter.com/BoredApeYC). It became a hit within the community and we've had a ton of fun with it, so I thought I'd open source it for you to use in your own community. 
 
 ## Magic
-![clean_pfp](/docs/img/clean.png) ![suit](/docs/img/fit.png)![pfp_with_fit](/docs/img/final.png)
+![clean_pfp](/docs/img/ape.png) ![suit](/docs/img/beer_hat.png) ![pfp_with_fit](/docs/img/beer-ape.png)
 
 ## Setup
 
