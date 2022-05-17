@@ -10,6 +10,7 @@ python = "^3.9"
 discord = "^1.7.3"
 requests = "^2.27.1"
 Pillow = "^9.1.1"
+python-dotenv = "^0.20.0"
 
 [tool.poetry.dev-dependencies]
 

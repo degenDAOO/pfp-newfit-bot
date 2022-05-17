@@ -1,2 +1,3 @@
 clean_pfps/*
 dressed_pfps/*
+.env

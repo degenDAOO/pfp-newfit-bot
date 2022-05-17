@@ -4,6 +4,8 @@ import discord
 from discord.ext import commands
 import json
 import requests
+import typing
+from dotenv import load_dotenv
 import PIL
 from PIL import Image
 
@@ -11,30 +13,22 @@ from PIL import Image
 bot = commands.Bot(command_prefix="!")
 
 # Opening JSON file with pfps. Add your open file and update it to match the name here
-data = open('attributes.json', )
+# data = open('backup.json', )
 
 # Folder locations for clean pfps, completed pfps, and outfits
 
 save_img_folder = 'dressed_pfps/'
 pfp_folder = 'clean_pfps/'
-outfits_folder = 'outfits/'
-
-# Returns JSON object as a dictionary
-pfp_atts = json.load(data)
+outfits_folder = 'outfits/beer/'
 
 
 # list of the various outfits you want to offer. these should match the filename on the outfit pngs
 
-outfits = ["beer_hat-bg", "beer_hat-clean"]
+outfits = ["default", "clean"]
+
+load_dotenv()
 
 # Search for the pfp id in the JSON dictionary and return the image URL associated with that id. You'll need to update the keys to match what's in your JSON delattr
-
-# Need to add error handling
-
-def get_pfp_img_url(id):
-    for pfp in pfp_atts:
-        if id == pfp['id']:
-            return pfp['imageSrc']
 
 
 # Downloads the pfp from the image URL and saves it in a directory
@@ -47,10 +41,10 @@ def download_image(url, image_file_path):
     with Image.open(io.BytesIO(r.content)) as im:
         im.save(image_file_path)
 
-# Combines the pfp image with a transparent png of the attribute  and saves it to an output directory
+# Combines the pfp image with a transparent png of the attribute and saves it to an output directory
 
 def get_dressed(fit, pfp_id):
-    url = (get_pfp_img_url(pfp_id))
+    url = ('https://degenape.nyc3.cdn.digitaloceanspaces.com/apes/web/' + str(pfp_id) + '.jpg')
     download_image(url, pfp_folder + str(pfp_id) + '.png')
 
 # This combines the images 
@@ -67,10 +61,10 @@ def get_dressed(fit, pfp_id):
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
 
-# !newfit command executes the get_dressed function and returns the resulting image. It accepts a value between 1 and 10000. Update this to use the command name you want and the values to fit the range of your project
+# !beerme command executes the get_dressed function and returns the resulting image. It accepts a value between 1 and 10000. Update this to use the command name you want and the values to fit the range of your project
 
-@bot.command(name="newfit", brief='Dress your pfp', description='This command will let you apply new fits to your pfp')
-async def newfit(ctx, fit: str, pfp_id: int):
+@bot.command(name="beerme", brief='Add a beer helmet to your pfp', description='This command will let you apply new fits to your pfp')
+async def beerme(ctx, pfp_id: int, fit: typing.Optional[str] = "default"):
     try:
       if fit.lower() in outfits:
         if 0 <= pfp_id <= 10000:
@@ -92,4 +86,4 @@ async def fits(ctx):
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound): # or discord.ext.commands.errors.CommandNotFound as you wrote
         await ctx.send("Unknown command, please check !help for a list of available commands")
-bot.run(os.getenv('TOKEN'))
+bot.run(os.getenv('DISCORD_TOKEN'))
