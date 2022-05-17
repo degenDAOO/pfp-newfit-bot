@@ -86,4 +86,4 @@ async def on_command_error(ctx, error):
         await ctx.send("Unknown command, please check !help for a list of available commands")
 
 
-bot.run(os.environ['DISCORD_TOKEN'])
+bot.run(os.environ.get('DISCORD_TOKEN'))
