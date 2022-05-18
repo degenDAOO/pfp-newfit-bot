@@ -3,6 +3,7 @@ import io
 import discord
 from discord.ext import commands
 import json
+from pprint import pprint
 import requests
 import typing
 from dotenv import load_dotenv
@@ -43,6 +44,7 @@ def download_image(url, image_file_path):
 
 def get_dressed(fit, pfp_id):
     url = ('https://degenape.nyc3.cdn.digitaloceanspaces.com/apes/web/' + str(pfp_id) + '.jpg')
+    pprint(url)
     download_image(url, pfp_folder + str(pfp_id) + '.png')
 
 # This combines the images 
@@ -85,8 +87,6 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound): # or discord.ext.commands.errors.CommandNotFound as you wrote
         await ctx.send("Unknown command, please check !help for a list of available commands")
 
-print(os.environ)
 load_dotenv()
-print(os.environ['DISCORD_TOKEN'])
 
 bot.run(os.environ['DISCORD_TOKEN'])
