@@ -87,6 +87,6 @@ async def on_command_error(ctx, error):
 
 print(os.environ)
 load_dotenv()
-print(os.environ)
+print(os.environ['DISCORD_TOKEN'])
 
 bot.run(os.environ['DISCORD_TOKEN'])
