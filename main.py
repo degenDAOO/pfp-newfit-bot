@@ -44,7 +44,6 @@ def download_image(url, image_file_path):
 
 def get_dressed(fit, pfp_id):
     url = ('https://degenape.nyc3.cdn.digitaloceanspaces.com/apes/web/' + str(pfp_id) + '.jpg')
-    pprint(url)
     download_image(url, pfp_folder + str(pfp_id) + '.png')
 
 # This combines the images 
