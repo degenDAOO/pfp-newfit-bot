@@ -85,8 +85,8 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound): # or discord.ext.commands.errors.CommandNotFound as you wrote
         await ctx.send("Unknown command, please check !help for a list of available commands")
 
-print('pre ' + os.environ)
+print(os.environ)
 load_dotenv()
-print('post ' + os.environ)
+print(os.environ)
 
 bot.run(os.environ['DISCORD_TOKEN'])
