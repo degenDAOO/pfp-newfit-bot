@@ -19,8 +19,12 @@ bot = commands.Bot(command_prefix="!")
 # Folder locations for clean pfps, completed pfps, and outfits
 
 save_img_folder = 'dressed_pfps/'
-pfp_folder = 'clean_pfps/'
 outfits_folder = 'outfits/beer/'
+pfp_folder = 'clean_pfps/'
+
+save_dtp_img_folder = 'dtp/dressed_pfps/'
+outfits_dtp_folder = 'dtp/outfits/beer/'
+pfp_dtp_folder = 'dtp/clean_pfps/'
 
 
 # list of the various outfits you want to offer. these should match the filename on the outfit pngs
@@ -56,6 +60,41 @@ def get_dressed(fit, pfp_id):
 
     return
 
+def get_dtp_dressed(fit, pfp_id):
+    
+    payload = json.dumps({
+        'condition': {
+            'project_ids': [
+                {
+                    'project_id': 'degentrashpandas'
+                }
+            ],
+            'name': {
+                'operation': 'EXACT', 
+                'value': 'Degen Trash Panda #' + str(pfp_id)
+                },
+        }
+    })
+    headers = {
+        'Authorization': os.environ['HYPER_TOKEN'],
+        'Content-Type': 'application/json'
+    }
+    r = requests.post('https://beta.api.solanalysis.com/rest/get-market-place-snapshots', headers=headers, data=payload)
+    
+    url = r.json()['market_place_snapshots'][0]['meta_data_img']
+
+    download_image(url, pfp_dtp_folder + str(pfp_id) + '.png')
+
+# This combines the images 
+
+    pfp = Image.open(pfp_dtp_folder + str(pfp_id) + '.png')
+    outfit = Image.open(outfits_dtp_folder + fit + '.png')
+
+    pfp.paste(outfit, (0, 0), mask=outfit)
+    pfp.save(save_dtp_img_folder + 'dressed' + str(pfp_id) + '.png')
+
+    return
+
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
@@ -69,6 +108,19 @@ async def beerme(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
         if 0 <= pfp_id <= 10000:
             get_dressed(fit, str(pfp_id))
             await ctx.channel.send(file=discord.File(save_img_folder + 'dressed' + str(pfp_id) +'.png'))
+      else: 
+        await ctx.send('Please enter a valid fit. Check !fits for options')
+    except:
+        await ctx.send('Please enter a valid number between 1 and 10000.')
+
+
+@bot.command(name="beer-panda", brief='Add a beer helmet to your trashy Panda', description='This command will let you add a beer helmet to your DTP')
+async def beer_panda(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
+    try:
+      if fit.lower() in outfits:
+        if 0 <= pfp_id <= 20000:
+            get_dtp_dressed(fit, str(pfp_id))
+            await ctx.channel.send(file=discord.File(save_dtp_img_folder + 'dressed' + str(pfp_id) +'.png'))
       else: 
         await ctx.send('Please enter a valid fit. Check !fits for options')
     except:
@@ -89,3 +141,4 @@ async def on_command_error(ctx, error):
 load_dotenv()
 
 bot.run(os.environ['DISCORD_TOKEN'])
+
