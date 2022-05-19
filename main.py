@@ -25,7 +25,7 @@ outfits_folder = 'outfits/beer/'
 
 # list of the various outfits you want to offer. these should match the filename on the outfit pngs
 
-outfits = ["default", "clean"]
+outfits = ["background", "clean"]
 
 # Search for the pfp id in the JSON dictionary and return the image URL associated with that id. You'll need to update the keys to match what's in your JSON delattr
 
@@ -63,7 +63,7 @@ async def on_ready():
 # !beerme command executes the get_dressed function and returns the resulting image. It accepts a value between 1 and 10000. Update this to use the command name you want and the values to fit the range of your project
 
 @bot.command(name="beerme", brief='Add a beer helmet to your pfp', description='This command will let you apply new fits to your pfp')
-async def beerme(ctx, pfp_id: int, fit: typing.Optional[str] = "default"):
+async def beerme(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
     try:
       if fit.lower() in outfits:
         if 0 <= pfp_id <= 10000:
