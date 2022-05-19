@@ -43,7 +43,7 @@ def download_image(url, image_file_path):
 # Combines the pfp image with a transparent png of the attribute and saves it to an output directory
 
 def get_dressed(fit, pfp_id):
-    url = ('https://degenape.nyc3.digitaloceanspaces.com/apes/no-head-traits/' + str(pfp_id) + '.jpg')
+    url = ('https://degenape.nyc3.digitaloceanspaces.com/apes/no-head-traits/' + str(pfp_id) + '.png')
     download_image(url, pfp_folder + str(pfp_id) + '.png')
 
 # This combines the images 
