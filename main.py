@@ -124,7 +124,7 @@ async def beer_panda(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
       else: 
         await ctx.send('Please enter a valid fit. Check !fits for options')
     except:
-        await ctx.send('Please enter a valid number between 1 and 10000.')
+        await ctx.send('Please enter a valid number between 1 and 20000.')
 
 # Lists the different "fits" available. This just returns the outfits list on new lines 
 

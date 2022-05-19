@@ -6,6 +6,7 @@ chardet==4.0.0
 charset-normalizer==2.0.12
 discord==1.7.3
 discord.py==1.7.3
+environ==1.0
 idna==3.3
 multidict==6.0.2
 Pillow==9.1.1
