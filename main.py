@@ -193,13 +193,13 @@ async def beer_panda(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
 async def beer_egg(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
     try:
       if fit.lower() in outfits:
-        if 0 <= pfp_id <= 20000:
+        if 0 <= pfp_id <= 2500:
             get_egg_dressed(fit, str(pfp_id))
             await ctx.channel.send(file=discord.File(save_egg_img_folder + 'dressed' + str(pfp_id) +'.png'))
       else: 
         await ctx.send('Please enter a valid fit. Check !fits for options')
     except:
-        await ctx.send('Please enter a valid number between 1 and 20000.')
+        await ctx.send('Please enter a valid number between 1 and 2500.')
 
 # Lists the different "fits" available. This just returns the outfits list on new lines 
 
