@@ -30,6 +30,10 @@ save_egg_img_folder = 'egg/dressed_pfps/'
 outfits_egg_folder = 'egg/outfits/beer/'
 pfp_egg_folder = 'egg/clean_pfps/'
 
+save_jersey_img_folder = 'jersey/dressed_pfps/'
+outfits_jersey_folder = 'jersey/outfits/beer/'
+pfp_jersey_folder = 'jersey/clean_pfps/'
+
 
 # list of the various outfits you want to offer. these should match the filename on the outfit pngs
 
@@ -61,6 +65,12 @@ def get_dressed(fit, pfp_id):
 
     pfp.paste(outfit, (0, 0), mask=outfit)
     pfp.save(save_img_folder + 'dressed' + str(pfp_id) + '.png')
+
+    return
+
+def get_jersey_dressed(pfp_id):
+    url = ('https://degenape.nyc3.digitaloceanspaces.com/apes/jersey-1/' + str(pfp_id) + '.png')
+    download_image(url, save_jersey_img_folder + str(pfp_id) + '.png')
 
     return
 
@@ -161,6 +171,15 @@ async def beerme_ape(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
             await ctx.channel.send(file=discord.File(save_img_folder + 'dressed' + str(pfp_id) +'.png'))
       else: 
         await ctx.send('Please enter a valid fit. Check !fits for options')
+    except:
+        await ctx.send('Please enter a valid number between 1 and 10000.')
+
+@bot.command(name="seven", brief='Add a jersey to your pfp', description='This command will let you apply new fits to your pfp')
+async def seven(ctx, pfp_id: int):
+    try:
+        if 0 <= pfp_id <= 10000:
+            get_jersey_dressed(str(pfp_id))
+            await ctx.channel.send(file=discord.File(save_jersey_img_folder + str(pfp_id) +'.png'))
     except:
         await ctx.send('Please enter a valid number between 1 and 10000.')
 
