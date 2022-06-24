@@ -242,7 +242,7 @@ async def bussin_ape(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
       if fit.lower() in outfits:
         if 0 <= pfp_id <= 10000:
             get_bussin(fit, str(pfp_id))
-            await ctx.channel.send(file=discord.File(save_img_folder + 'dressed' + str(pfp_id) +'.png'))
+            await ctx.channel.send(file=discord.File(save_bussin_img_folder + 'dressed' + str(pfp_id) +'.png'))
       else: 
         await ctx.send('Please enter a valid fit. Check !fits for options')
     except:
