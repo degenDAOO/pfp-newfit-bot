@@ -40,7 +40,7 @@ pfp_jersey_folder = 'jersey/clean_pfps/'
 
 # list of the various outfits you want to offer. these should match the filename on the outfit pngs
 
-outfits = ["background", "clean", "black", "blue", "gold", "green", "purple", "red", "white"]
+outfits = ["background", "clean", "black", "blue", "brown", "gold", "green", "purple", "red", "white"]
 
 # Search for the pfp id in the JSON dictionary and return the image URL associated with that id. You'll need to update the keys to match what's in your JSON delattr
 
