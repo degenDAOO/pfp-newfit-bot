@@ -236,7 +236,7 @@ async def beer_egg(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
     except:
         await ctx.send('Please enter a valid number between 1 and 2500.')
 
-@bot.command(name="bussin-ape", brief='You bussin fr fr no cap', description='This command will let you be much cooler than you are')
+@bot.command(name="bussin", brief='You bussin fr fr no cap', description='This command will let you be much cooler than you are')
 async def bussin_ape(ctx, pfp_id: int, fit: typing.Optional[str] = "black"):
     try:
       if fit.lower() in outfits:
