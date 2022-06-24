@@ -40,7 +40,7 @@ pfp_jersey_folder = 'jersey/clean_pfps/'
 
 # list of the various outfits you want to offer. these should match the filename on the outfit pngs
 
-outfits = ["background", "clean", "blue"]
+outfits = ["background", "clean", "black", "blue", "gold", "green", "purple", "red", "white"]
 
 # Search for the pfp id in the JSON dictionary and return the image URL associated with that id. You'll need to update the keys to match what's in your JSON delattr
 
@@ -237,7 +237,7 @@ async def beer_egg(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
         await ctx.send('Please enter a valid number between 1 and 2500.')
 
 @bot.command(name="bussin-ape", brief='You bussin fr fr no cap', description='This command will let you be much cooler than you are')
-async def bussin_ape(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
+async def bussin_ape(ctx, pfp_id: int, fit: typing.Optional[str] = "black"):
     try:
       if fit.lower() in outfits:
         if 0 <= pfp_id <= 10000:
