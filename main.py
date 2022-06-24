@@ -22,6 +22,9 @@ save_img_folder = 'dressed_pfps/'
 outfits_folder = 'outfits/beer/'
 pfp_folder = 'clean_pfps/'
 
+save_bussin_img_folder = 'bussin/dressed_pfps/'
+outfits_bussin_folder = 'outfits/bussin/'
+
 save_dtp_img_folder = 'dtp/dressed_pfps/'
 outfits_dtp_folder = 'dtp/outfits/beer/'
 pfp_dtp_folder = 'dtp/clean_pfps/'
@@ -37,7 +40,7 @@ pfp_jersey_folder = 'jersey/clean_pfps/'
 
 # list of the various outfits you want to offer. these should match the filename on the outfit pngs
 
-outfits = ["background", "clean"]
+outfits = ["background", "clean", "blue"]
 
 # Search for the pfp id in the JSON dictionary and return the image URL associated with that id. You'll need to update the keys to match what's in your JSON delattr
 
@@ -65,6 +68,20 @@ def get_dressed(fit, pfp_id):
 
     pfp.paste(outfit, (0, 0), mask=outfit)
     pfp.save(save_img_folder + 'dressed' + str(pfp_id) + '.png')
+
+    return
+    
+def get_bussin(fit, pfp_id):
+    url = ('https://degenape.nyc3.digitaloceanspaces.com/apes/no-head-traits/' + str(pfp_id) + '.png')
+    download_image(url, pfp_folder + str(pfp_id) + '.png')
+
+# This combines the images 
+
+    pfp = Image.open(pfp_folder + str(pfp_id) + '.png')
+    outfit = Image.open(outfits_bussin_folder + fit + '.png')
+
+    pfp.paste(outfit, (0, 0), mask=outfit)
+    pfp.save(save_bussin_img_folder + 'dressed' + str(pfp_id) + '.png')
 
     return
 
@@ -183,7 +200,6 @@ async def seven(ctx, pfp_id: int):
     except:
         await ctx.send('Please enter a valid number between 1 and 10000.')
 
-
 @bot.command(name="beerme-panda", brief='Add a beer helmet to your trashy Panda', description='This command will let you add a beer helmet to your DTP')
 async def beer_panda(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
     try:
@@ -219,6 +235,18 @@ async def beer_egg(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
         await ctx.send('Please enter a valid fit. Check !fits for options')
     except:
         await ctx.send('Please enter a valid number between 1 and 2500.')
+
+@bot.command(name="bussin-ape", brief='You bussin fr fr no cap', description='This command will let you be much cooler than you are')
+async def bussin_ape(ctx, pfp_id: int, fit: typing.Optional[str] = "clean"):
+    try:
+      if fit.lower() in outfits:
+        if 0 <= pfp_id <= 10000:
+            get_bussin(fit, str(pfp_id))
+            await ctx.channel.send(file=discord.File(save_img_folder + 'dressed' + str(pfp_id) +'.png'))
+      else: 
+        await ctx.send('Please enter a valid fit. Check !fits for options')
+    except:
+        await ctx.send('Please enter a valid number between 1 and 10000.')
 
 # Lists the different "fits" available. This just returns the outfits list on new lines 
 
