@@ -25,6 +25,8 @@ pfp_folder = 'clean_pfps/'
 save_bussin_img_folder = 'bussin/dressed_pfps/'
 outfits_bussin_folder = 'outfits/bussin/'
 
+outfits_dtp_bussin_folder = 'dtp/outfits/bussin/'
+
 save_dtp_img_folder = 'dtp/dressed_pfps/'
 outfits_dtp_folder = 'dtp/outfits/beer/'
 pfp_dtp_folder = 'dtp/clean_pfps/'
@@ -123,6 +125,41 @@ def get_dtp_dressed(fit, pfp_id):
 
     pfp.paste(outfit, (0, 0), mask=outfit)
     pfp.save(save_dtp_img_folder + 'dressed' + str(pfp_id) + '.png')
+
+    return
+
+def get_bussin_dtp(fit, pfp_id):
+    
+    payload = json.dumps({
+        'condition': {
+            'project_ids': [
+                {
+                    'project_id': 'degentrashpandas'
+                }
+            ],
+            'name': {
+                'operation': 'EXACT', 
+                'value': 'Degen Trash Panda #' + str(pfp_id)
+                },
+        }
+    })
+    headers = {
+        'Authorization': os.environ['HYPER_TOKEN'],
+        'Content-Type': 'application/json'
+    }
+    r = requests.post('https://beta.api.solanalysis.com/rest/get-market-place-snapshots', headers=headers, data=payload)
+    
+    url = r.json()['market_place_snapshots'][0]['meta_data_img']
+
+    download_image(url, pfp_dtp_folder + str(pfp_id) + '.png')
+
+# This combines the images 
+
+    pfp = Image.open(pfp_dtp_folder + str(pfp_id) + '.png')
+    outfit = Image.open(outfits_dtp_bussin_folder + fit + '.png')
+
+    pfp.paste(outfit, (0, 0), mask=outfit)
+    pfp.save(save_dtp_img_folder + 'bussin' + str(pfp_id) + '.png')
 
     return
 
@@ -243,6 +280,18 @@ async def bussin_ape(ctx, pfp_id: int, fit: typing.Optional[str] = "black"):
         if 0 <= pfp_id <= 10000:
             get_bussin(fit, str(pfp_id))
             await ctx.channel.send(file=discord.File(save_bussin_img_folder + 'dressed' + str(pfp_id) +'.png'))
+      else: 
+        await ctx.send('Please enter a valid fit. Check !fits for options')
+    except:
+        await ctx.send('Please enter a valid number between 1 and 10000.')
+
+@bot.command(name="bussin-panda", brief='You bussin fr fr no cap', description='This command will let you be much cooler than you are')
+async def bussin_dtp(ctx, pfp_id: int, fit: typing.Optional[str] = "black"):
+    try:
+      if fit.lower() in outfits:
+        if 0 <= pfp_id <= 20000:
+            get_bussin_dtp(fit, str(pfp_id))
+            await ctx.channel.send(file=discord.File(save_dtp_img_folder + 'bussin' + str(pfp_id) +'.png'))
       else: 
         await ctx.send('Please enter a valid fit. Check !fits for options')
     except:
