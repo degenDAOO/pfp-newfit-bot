@@ -285,7 +285,7 @@ async def bussin_ape(ctx, pfp_id: int, fit: typing.Optional[str] = "black"):
     except:
         await ctx.send('Please enter a valid number between 1 and 10000.')
 
-@bot.command(name="bussin-panda", brief='You bussin fr fr no cap', description='This command will let you be much cooler than you are')
+@bot.command(name="bussin-panda", brief='You bussin fr fr no cap panda', description='This command will let you be much cooler than you are')
 async def bussin_dtp(ctx, pfp_id: int, fit: typing.Optional[str] = "black"):
     try:
       if fit.lower() in outfits:
