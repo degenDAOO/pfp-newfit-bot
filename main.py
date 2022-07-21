@@ -98,8 +98,11 @@ def combine_images(collection, outfit, fit, pfp_id):
   pfp = Image.open('collections/' + collection + '/clean_pfps/' + str(pfp_id) + '.png')
   outfit = Image.open('collections/' + collection + '/outfits/' + outfit + '/' + fit + '.png')
 
-  pfp.paste(outfit, (0, 0), mask=outfit)
-  pfp.save(save_file_path)
+  # Better blending method
+  dressed = Image.new("RGBA", pfp.size)
+  dressed = Image.alpha_composite(dressed, pfp)
+  dressed = Image.alpha_composite(dressed, outfit)
+  dressed.save(save_file_path)
 
   return save_file_path
 
