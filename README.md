@@ -1,3 +1,11 @@
+# Archive
+We've moved active development over to a new repo: [gib-pfp-discord-bot](https://github.com/degenDAOO/gib-pfp-discord-bot) since we've departed from the original methods and are actively developing in a new direction now!
+
+
+
+---
+
+
 # Discord Bot for Creating Degeniverse Promo PFPs
 
 We originally forked the [MonkeyDAO Discord Bot](https://github.com/0xbagp/new-fit-for-your-pfp---discord-bot) to help promote various marketing efforts by adding custom traits to your DAA / DTP / DEGG pfp. Over time it was re-written to suit our needs and make it easier to roll out new campaigns with ease, and changed enough to deserve its own repo. 
