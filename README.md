@@ -1,33 +1,79 @@
-# Discord Bot for Dressing up Your PFP
+# Discord Bot for Creating Degeniverse Promo PFPs
 
-This bot was initially created for the [MonkeyDAO](https://twitter.com/monkedao) to help [Solana Monkey Business](https://twitter.com/SolanaMBS) suit up for Christie's in support of [BAYC](https://twitter.com/BoredApeYC). It became a hit within the community and we've had a ton of fun with it, so I thought I'd open source it for you to use in your own community. 
+We originally forked the [MonkeyDAO Discord Bot](https://github.com/0xbagp/new-fit-for-your-pfp---discord-bot) to help promote various marketing efforts by adding custom traits to your DAA / DTP / DEGG pfp. Over time it was re-written to suit our needs and make it easier to roll out new campaigns with ease, and changed enough to deserve its own repo. 
 
-## Magic
+## Results
+```
+[In Discord] !gib ape 1297 beer
+```
 ![clean_pfp](/docs/img/ape.png) ![suit](/docs/img/beer_hat.png) ![pfp_with_fit](/docs/img/beer-ape.png)
 
-## Setup
+## Cool things going on here...
+Users simply need to type their collection (`ape/dtp/egg`) and the number of the NFT, along with the name of the campaign/promo. In the background we download the image, before performing an image tranformation, and sending it back to discord. 
 
-* Replace the json file in the root directory with your own and ensure it's named attributes.json. This should include the PFP IDs and the respective image URL. See the included file as an example  
+For DAA, we have all the image urls for versions without any headtraits (super useful), but for DTP/DEGG we use [The Hyperspace API](https://docs.hyperspace.xyz/hype/developer-guide/overview) to querey the chain for the NFT metadata, pull the image url, download that and then perform the transformation. No need for a big json file for every Degeniverse NFT!
 
-* Update the `get_pfp_img_url()` function with the keys for your pfp ids and image urls from the json file 
 
-* In the outfits folder, drop the transparent pngs you'd like to use as "fits". These should be named descriptively as whatever you name the files are what the bot will use as the command arguments 
 
-* Update the list called "outfits" with a list of strings that match your outfit file names (omit the .png). So if "suit" is one of your outfits in the list, then suit.png should be in the "outfits" folder 
+# Getting Started
 
-* The bot command called "newfit" has a conditional statement to check that the pfp id entered is within the correct range. Update these values to match the acceptable ranges of your project.
+## 1. Setup
 
-That's it! Setup the bot and invite it into your server and you should be good to go. 
+First, setup your [.env](https://medium.com/chingu/an-introduction-to-environment-variables-and-how-to-use-them-f602f66d15fa) file to store your secrets. See [Create the Discord Bot](#3-create-the-discord-bot) for generating that token. 
+```sh
+cp .env.example .env
 
-## How to use it
+## .env file
+DISCORD_TOKEN=
+HYPER_TOKEN=
+```
 
-The basic command format is **!newfit** `<fit> <pfp_id>`. So you might enter **!newfit suit 970**. 
+We use [Poetry](https://python-poetry.org/) for our dependency & package mgmt. To get everything installed and run the application:
 
-The command **!fits** will list all of the fitst defined in the "outfits" list so the user knows what options are available to them. 
+```sh
+poetry install
 
-I hope your community has fun with this! 
+poetry run python main.py
+```
+This runs the bot locally on your machine... fine for testing, but you'll want to [Deploy to Heroku](#4-deploy-to-heroku) so it runs on an always available server.
 
-If they do, and you're feeling generous, send me an NFT so I can join :) 
+## 2. Adding a new campaign
 
-* **SOL:** C5XYM4RDtEdKm5NhDLhYJ7gH4vNRocna5qYb1pCThNa
-* **ETH:** 0xAf1c16F1370dEdad2784287595f9152D8A1575d3
+* In each collection folder, create a folder in `/outfits` with the name of the campaign.
+  > N.B. this will be used in the command so choose wisely.
+
+* Next add the transparent pngs into that folder, with each filename representing a "variant" of the trait. If there are no variants, then name the file "default.png" for easier usage.
+
+* Update the `gib-help` bot command in `main.py` with the new campaign info to help people know how to use the thing.
+
+## 3. Create the Discord Bot
+Easiest just to point you here: [Setup the bot](https://discordpy.readthedocs.io/en/stable/discord.html) and then invite it into your server -- giving it access to the channels you'd like people to use it. 
+
+## 4. Deploy to Heroku
+We've included a `Procfile, requirements.txt, and runtime.txt` files to make it easy for you to deploy your bot for free on Heroku. Here is a [handy guide](https://devcenter.heroku.com/articles/getting-started-with-python) to get you started.
+
+But once you're setup, generally it looks like this to deploy your code to Heroku and have the process started:
+```sh
+git push heroku master
+```
+
+## 5. How to use it in Discord
+
+Generally this is the pattern utilized to initiate the bot in discord. Everything is explained in the `main.py` file as well. The `variant` parameter is optional and assumed to be `default`. See Bussin for an example of using lots of different variants.
+
+```md
+!gib [collection] [id] [campaign] [variant]
+!gib [ape/dtp/egg] [123] [solcap/solsnap/bussin/beer] [black/blue/red/white... etc]
+
+Ex:
+!gib ape 123 solcap
+!gib ape 123 bussin blue
+!gib dtp 456 solsnap 
+!gib egg 789 beer 
+```
+
+---
+
+## Thats it!
+
+Hope this helps you develop something cool for your community! Give me a shout at [@jsb_sol](https://twitter.com/jsb_sol) if you need help or have built something cool yourself!
